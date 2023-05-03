@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 /* border box model: https://css-tricks.com/box-sizing/ */
 html {

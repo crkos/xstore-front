@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+        colors: {
+          navbarColor: '#CAC4CE'
+        }
+    },
+    fontFamily: {
+        'heebo': ['Heebo', 'sans-serif'],
+    }
+
   },
   plugins: [],
 }
