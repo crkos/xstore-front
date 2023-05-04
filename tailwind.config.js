@@ -6,6 +6,7 @@ export default {
       colors: {
         navbarColor: "#CAC4CE",
         categoriesColor: "#DFDFDF",
+        submitColor: "#F7ECE1",
       },
     },
     fontFamily: {

@@ -54,7 +54,7 @@ function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/login">
               <span className="text-2xl">
                 <FaUserCircle />
               </span>
