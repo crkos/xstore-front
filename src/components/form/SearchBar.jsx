@@ -20,20 +20,23 @@ const SearchForm = ({
   };
 
   return (
-    <form onSubmit={handleOnSubmit} className="relative">
+    <form onSubmit={handleOnSubmit} className="flex relative">
       <input
         type="text"
         value={value}
         onChange={({ target }) => setValue(target.value)}
         className={
-          "border-2 transition bg-transparent p-1 outline-none " +
+          "border-2 transition bg-transparent p-1 outline-none flex-grow " +
           inputClassName
         }
         placeholder={placeholder}
       />
-      <span className="absolute top-1/2 -translate-y-1/2 right-2 p-2 border-l-2 border-b-gray-950 md:text-2xl sm:text-lg">
+      <button
+        type="submit"
+        className="flex-shrink-0 p-2 border-l-2 border-b-gray-950 md:text-2xl sm:text-lg"
+      >
         <CiSearch />
-      </span>
+      </button>
     </form>
   );
 };

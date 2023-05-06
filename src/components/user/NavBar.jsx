@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function NavBar() {
   return (
     <>
-      <nav className="bg-navbarColor font-light w-full p-1 ">
+      <nav className="bg-navbarColor font-light w-full p-1">
         <ul className="flex gap-6 p-1 items-center">
           <li className="ml-4 mr-4">
             <Link to="/">

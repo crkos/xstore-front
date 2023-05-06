@@ -7,11 +7,11 @@ export default {
         navbarColor: "#CAC4CE",
         categoriesColor: "#DFDFDF",
         submitColor: "#F7ECE1",
+        focusedItemColor: "#efd7ca",
+        bordeColor: "#BFBFBF",
       },
     },
-    fontFamily: {
-      heebo: ["Heebo", "sans-serif"],
-    },
+    fontFamily: {},
   },
   plugins: [],
 };

@@ -2,19 +2,24 @@ import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import FormInput from "../form/FormInput.jsx";
 import Submit from "../form/Submit.jsx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate /*useNavigate*/ } from "react-router-dom";
 import { useAuth, useNotification } from "../../hooks/index.js";
 import Container from "../form/Container.jsx";
+import { signUpCliente } from "../../api/clientes.js";
 
-const SignIn = () => {
+const SignUp = () => {
   const [userInfo, setUserInfo] = useState({
     correo: "",
     contrasena: "",
+    confContrasena: "",
   });
+  const [isPending, setIsPending] = useState(false);
 
-  const { handleLogin, authInfo } = useAuth();
+  //const navigate = useNavigate();
 
-  const { isLoggedIn, isPending } = authInfo;
+  const { authInfo } = useAuth();
+
+  const { isLoggedIn } = authInfo;
 
   const navigate = useNavigate();
 
@@ -27,13 +32,25 @@ const SignIn = () => {
       return { error: "Por favor ingresa una contraseña" };
     if (userInfo.contrasena.length < 8)
       return { error: "La contraseña debe tener al menos 8 caracteres" };
+    if (userInfo.contrasena !== userInfo.confContrasena)
+      return { error: "Las contraseñas no coinciden" };
     return { error: null };
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { error } = validateSignIn();
     if (error) updateNotification("error", error);
-    handleLogin(userInfo.correo, userInfo.contrasena);
+    setIsPending((prevState) => !prevState);
+    const response = await signUpCliente(userInfo);
+    if (response.error) {
+      updateNotification("error", response.error);
+      setIsPending((prevState) => !prevState);
+    }
+    if (response.user) {
+      updateNotification("success", "Cuenta creada exitosamente");
+      setIsPending((prevState) => !prevState);
+      navigate("/login");
+    }
   };
 
   const handleOnChange = (e) => {
@@ -51,7 +68,7 @@ const SignIn = () => {
       </span>
       <form className="mt-4 w-96" onSubmit={handleSubmit}>
         <h1 className="mt-4 font-bold text-2xl text-center mb-4">
-          Inicia sesión en tu cuenta
+          Crea tu cuenta
         </h1>
         <FormInput
           label="Correo electrónico"
@@ -71,19 +88,28 @@ const SignIn = () => {
           type="password"
           typeform="password"
         />
-        <Submit value="Iniciar sesión" busy={isPending}></Submit>
+        <FormInput
+          label="Confirmar contraseña"
+          name="confContrasena"
+          placeholder="********"
+          value={userInfo.confContrasena}
+          onChange={handleOnChange}
+          type="password"
+          typeform="password"
+        />
+        <Submit value="Crear cuenta" busy={isPending}></Submit>
       </form>
-      <p className="mt-14">
-        ¿Aún no tienes una cuenta?{" "}
+      <p className="mt-6">
+        ¿Ya tienes una cuenta?{" "}
         <Link
-          to="/register"
+          to="/login"
           className="underline hover:no-underline text-blue-700"
         >
-          Crear cuenta
+          Iniciar sesión
         </Link>
       </p>
     </Container>
   );
 };
 
-export default SignIn;
+export default SignUp;
