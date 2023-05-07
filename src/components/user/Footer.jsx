@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <footer className="bg-navbarColor flex w-full p-4 pb-6 pt-6 h-max mt-auto fixed bottom-0 space-x-8">
+      <footer className="bg-navbarColor flex w-full p-4 pb-6 pt-6 h-max mt-auto bottom-0 space-x-8">
         <div className="w-2/12 ml-4 p-2">
           <p className="text-md text mb-2 font-bold">
             Tecnología pensada para ti

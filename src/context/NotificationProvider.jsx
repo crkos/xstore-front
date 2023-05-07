@@ -29,7 +29,7 @@ export default function NotificationProvider({ children }) {
     setNotification(value);
     timeoutId = setTimeout(() => {
       setNotification("");
-    }, 3000);
+    }, 1500);
   };
 
   return (

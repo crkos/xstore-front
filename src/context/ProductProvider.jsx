@@ -20,8 +20,25 @@ const ProductProvider = ({ children }) => {
     setLoading((prevState) => !prevState);
   };
 
+  const updateExistencia = (clave_producto) => {
+    setProducts((prevState) => {
+      return prevState.map((product) => {
+        if (product.clave_producto === clave_producto) {
+          return {
+            ...product,
+            existencia: product.existencia - 1,
+            cantidad: product.cantidad + 1,
+          };
+        }
+        return product;
+      });
+    });
+  };
+
   return (
-    <ProductContext.Provider value={{ products, loading, fetchProductos }}>
+    <ProductContext.Provider
+      value={{ products, loading, fetchProductos, updateExistencia }}
+    >
       {children}
     </ProductContext.Provider>
   );

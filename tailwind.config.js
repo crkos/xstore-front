@@ -9,6 +9,7 @@ export default {
         submitColor: "#F7ECE1",
         focusedItemColor: "#efd7ca",
         bordeColor: "#BFBFBF",
+        compraBoton: "#00008D",
       },
     },
     fontFamily: {},

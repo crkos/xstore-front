@@ -15,3 +15,19 @@ export const getProductos = async () => {
     return { error: error.message || error };
   }
 };
+
+export const getSingleProducto = async (productoId) => {
+  try {
+    const { data } = await client.get(`/producto/${productoId}`, {
+      headers: {
+        accept: "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) return response.data;
+
+    return { error: error.message || error };
+  }
+};
