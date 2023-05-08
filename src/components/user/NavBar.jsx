@@ -47,7 +47,7 @@ function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/cart">
               <span className="text-2xl">
                 <FaShoppingCart />
               </span>

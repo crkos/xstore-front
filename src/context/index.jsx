@@ -8,11 +8,11 @@ import CartProvider from "./CartProvider.jsx";
 export default function ContextProviders({ children }) {
   return (
     <NotificationProvider>
-      <ProductProvider>
-        <CartProvider>
+      <CartProvider>
+        <ProductProvider>
           <AuthProvider>{children}</AuthProvider>
-        </CartProvider>
-      </ProductProvider>
+        </ProductProvider>
+      </CartProvider>
     </NotificationProvider>
   );
 }

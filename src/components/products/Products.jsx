@@ -16,7 +16,7 @@ const Products = () => {
   }, []);
 
   return (
-    <section className="flex justify-center items-center h-full mt-10">
+    <section className="flex justify-evenly items-center mt-14 space-x-4 p-6 h-full">
       <div className="grid grid-cols-4 w-full gap-6 first:ml-10 last:mr-10 rounded-2xl">
         {products.length
           ? products.map((product) => (
