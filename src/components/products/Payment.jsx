@@ -134,7 +134,11 @@ const Payment = () => {
           </div>
         </div>
         <div className="w-[27rem] h-full bg-compraFondo flex flex-col items-center pl-4 pr-4">
-          <img src="/xstore.png" className="w-40 h-40 mt-6 rounded-full" />
+          <img
+            src={cartItems[0].imagen_producto}
+            className="w-40 h-40 mt-6 rounded-full"
+            alt={cartItems[0].descripcion}
+          />
           <div className="pb-6 border-b-2 w-[85%] text-center mt-4 border-b-bordeColor">
             <p className="text-2xl font-thin">{cartItems[0].nombre_producto}</p>
             <p className="font-thin text-center">
