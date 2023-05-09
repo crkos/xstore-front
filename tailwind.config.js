@@ -10,6 +10,7 @@ export default {
         focusedItemColor: "#efd7ca",
         bordeColor: "#BFBFBF",
         compraBoton: "#00008D",
+        compraFondo: "#D9D9D9",
       },
     },
     fontFamily: {},

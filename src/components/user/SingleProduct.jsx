@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getSingleProducto } from "../../api/products.js";
-import { useNotification } from "../../hooks/index.js";
+import { useCart, useNotification } from "../../hooks/index.js";
 import { priceFormatter } from "../../utils/formatter.js";
 
 const SingleProduct = () => {
@@ -11,10 +11,31 @@ const SingleProduct = () => {
 
   const { updateNotification } = useNotification();
 
+  const { updateCartItems } = useCart();
+
+  const navigate = useNavigate();
+
   const getSingleProduct = async () => {
     const { producto, error } = await getSingleProducto(productId);
     if (error) return updateNotification("error", error);
     setSingleProduct({ ...producto });
+  };
+
+  const handleBuy = async (product) => {
+    if (product.existencia <= 0)
+      return updateNotification("error", "Producto sin existencia");
+    if (product.existencia > 0)
+      updateNotification("success", "Producto agregado al carrito");
+    updateCartItems(product);
+    navigate("/checkout");
+  };
+
+  const handleAddToCart = async (product) => {
+    if (product.existencia <= 0)
+      return updateNotification("error", "Producto sin existencia");
+    if (product.existencia > 0)
+      updateNotification("success", "Producto agregado al carrito");
+    updateCartItems(product);
   };
 
   useEffect(() => {
@@ -37,10 +58,16 @@ const SingleProduct = () => {
             <p className="text-lg font-bold">{priceFormatter.format(precio)}</p>
             <p className="text-lg">{descripcion}</p>
             <div className="pt-10 space-y-4 text-white">
-              <button className="mx-auto pb-2 pt-2 w-full bg-compraBoton rounded-xl">
+              <button
+                className="mx-auto pb-2 pt-2 w-full bg-compraBoton rounded-xl"
+                onClick={() => handleBuy(singleProduct)}
+              >
                 Comprar ya
               </button>
-              <button className="mx-auto pb-2 pt-2 w-full bg-compraBoton rounded-xl">
+              <button
+                className="mx-auto pb-2 pt-2 w-full bg-compraBoton rounded-xl"
+                onClick={() => handleAddToCart(singleProduct)}
+              >
                 Agregar al carrito
               </button>
             </div>

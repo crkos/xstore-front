@@ -8,6 +8,12 @@ import Products from "./components/products/Products.jsx";
 import NotFound from "./components/user/NotFound.jsx";
 import SingleProduct from "./components/user/SingleProduct.jsx";
 import Cart from "./components/user/Cart.jsx";
+import Payment from "./components/products/Payment.jsx";
+import Computadoras from "./components/products/Computadoras.jsx";
+import Laptops from "./components/products/Laptops.jsx";
+import Celulares from "./components/products/Celulares.jsx";
+import Accesorios from "./components/products/Accesorios.jsx";
+import LicenciasSoftware from "./components/products/LicenciasSoftware.jsx";
 
 export default function App() {
   return (
@@ -21,6 +27,12 @@ export default function App() {
           <Route path="/register" element={<SignUp />} />
           <Route path="/product/:productId" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Payment />} />
+          <Route path="/computadoras" element={<Computadoras />} />
+          <Route path="/laptops" element={<Laptops />} />
+          <Route path="/celulares" element={<Celulares />} />
+          <Route path="/accesorios" element={<Accesorios />} />
+          <Route path="/licencias-software" element={<LicenciasSoftware />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

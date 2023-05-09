@@ -1,5 +1,6 @@
 import { useCart } from "../../hooks/index.js";
 import ProductCart from "../products/ProductCart.jsx";
+import ResumenCompra from "../products/ResumenCompra.jsx";
 
 const Cart = () => {
   const { cartItems } = useCart();
@@ -7,7 +8,7 @@ const Cart = () => {
   return (
     <>
       {cartItems.length ? (
-        <section className="flex justify-evenly items-center mt-14 space-x-4 p-6 min-h-max">
+        <section className="flex justify-evenly items-center mt-14 space-x-4 p-6 min-h-max max-w-full">
           <div className="border-4 rounded-xl w-[950px]">
             <table>
               <thead className="border-b-4 pb-4 p-4">
@@ -28,8 +29,7 @@ const Cart = () => {
             </table>
           </div>
           <div>
-            {/*TODO Hacer el resumen de compra, total, envió, etc  */}
-            <div className="bg-red-500 h-48 w-48"></div>
+            <ResumenCompra></ResumenCompra>
           </div>
         </section>
       ) : (

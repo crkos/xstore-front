@@ -66,7 +66,9 @@ const ProductCart = ({ producto }) => {
       <td>
         <div className="flex flex-col items-center pl-8 pr-8">
           {/* eslint-disable-next-line react/prop-types */}
-          <p className="text-2xl">{priceFormatter.format(producto.precio)}</p>
+          <p className="text-2xl">
+            {priceFormatter.format(producto.precio * producto.cantidad)}
+          </p>
         </div>
       </td>
     </tr>
