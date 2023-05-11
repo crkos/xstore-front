@@ -28,9 +28,11 @@ const ResumenCompra = () => {
           <p>{priceFormatter.format(totalItems)}</p>
         </div>
         <div className="flex items-center justify-center">
-          <button className="p-2 pl-6 pr-6 bg-compraBoton text-white rounded-2xl font-bold mt-3">
-            <Link to="/checkout">Continuar compra</Link>
-          </button>
+          <Link to="/checkout">
+            <button className="p-2 pl-6 pr-6 bg-compraBoton text-white rounded-2xl font-bold mt-3">
+              Continuar compra
+            </button>
+          </Link>
         </div>
       </div>
     </div>

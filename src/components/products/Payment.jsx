@@ -1,16 +1,28 @@
-import { BsCash, BsCashStack, FaRegCreditCard } from "react-icons/all";
+import {
+  BsCash,
+  BsCashStack,
+  FaRegCreditCard,
+  RxCheckCircled,
+} from "react-icons/all";
 import { useEffect, useState } from "react";
 import { priceFormatter } from "../../utils/formatter.js";
-import { Link } from "react-router-dom";
-import { useCart, useNotification } from "../../hooks/index.js";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth, useCart, useNotification } from "../../hooks/index.js";
 import { createVenta } from "../../api/venta.js";
 
 const Payment = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [productos, setProductos] = useState([]);
   const [total, setTotal] = useState(0);
+  const [madePayment, setMadePayment] = useState(false);
 
-  const { cartItems } = useCart();
+  const { cartItems, clearCart } = useCart();
+
+  const { authInfo } = useAuth();
+
+  const { isLoggedIn } = authInfo;
+
+  const navigate = useNavigate();
 
   const { updateNotification } = useNotification();
 
@@ -33,6 +45,8 @@ const Payment = () => {
       if (error) {
         updateNotification("error", error);
       } else if (message) {
+        clearCart();
+        setMadePayment((prevState) => !prevState);
         updateNotification("success", message);
       }
     } else if (selectedOption === "debitCard") {
@@ -40,6 +54,8 @@ const Payment = () => {
       if (error) {
         updateNotification("error", error);
       } else if (message) {
+        clearCart();
+        setMadePayment((prevState) => !prevState);
         updateNotification("success", message);
       }
     } else if (selectedOption === "cash") {
@@ -47,6 +63,8 @@ const Payment = () => {
       if (error) {
         updateNotification("error", error);
       } else if (message) {
+        clearCart();
+        setMadePayment((prevState) => !prevState);
         updateNotification("success", message);
       }
     } else if (selectedOption === "transfer") {
@@ -54,6 +72,8 @@ const Payment = () => {
       if (error) {
         updateNotification("error", error);
       } else if (message) {
+        clearCart();
+        setMadePayment((prevState) => !prevState);
         updateNotification("success", message);
       }
     } else {
@@ -61,12 +81,40 @@ const Payment = () => {
     }
   };
 
-  if (cartItems.length === 0)
+  if (cartItems.length === 0 && !madePayment)
     return (
       <p className="text-2xl font-bold mt-14 w-full text-center">
         Sin productos
       </p>
     );
+
+  if (!isLoggedIn) {
+    navigate("/login");
+    return updateNotification("error", "Inicia sesión para continuar");
+  } else if (madePayment) {
+    return (
+      <div className="w-full h-screen">
+        <div className="flex flex-col items-center justify-center w-full h-screen space-y-4">
+          <span className="text-9xl">
+            <RxCheckCircled />
+          </span>
+          <h1>Pago aprobado</h1>
+          <div className="w-96">
+            <Link to="/compras">
+              <button className="p-2 pl-20 pr-20 bg-compraBoton text-white rounded-2xl font-bold mt-3 w-full">
+                Ver en mis compras
+              </button>
+            </Link>
+            <Link to="/">
+              <button className="p-2 pl-20 pr-20 bg-compraBoton text-white rounded-2xl font-bold mt-3 w-full">
+                Página principal
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen flex items-center justify-evenly w-full">
@@ -162,12 +210,15 @@ const Payment = () => {
             <p className="text-2xl font-thin">{priceFormatter.format(total)}</p>
           </div>
           <div className="flex items-center justify-center mt-16">
-            <button
-              className="p-2 pl-20 pr-20 bg-compraBoton text-white rounded-2xl font-bold mt-3"
-              onClick={() => handlePayment(productos)}
-            >
-              <Link to="/checkout">Continuar</Link>
-            </button>
+            <Link to="/checkout">
+              <button
+                type="button"
+                className="p-2 pl-20 pr-20 bg-compraBoton text-white rounded-2xl font-bold mt-3"
+                onClick={() => handlePayment(productos)}
+              >
+                Continuar
+              </button>
+            </Link>
           </div>
         </div>
       </section>

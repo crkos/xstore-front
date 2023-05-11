@@ -14,6 +14,7 @@ import Laptops from "./components/products/Laptops.jsx";
 import Celulares from "./components/products/Celulares.jsx";
 import Accesorios from "./components/products/Accesorios.jsx";
 import LicenciasSoftware from "./components/products/LicenciasSoftware.jsx";
+import UserBought from "./components/user/UserBought.jsx";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/celulares" element={<Celulares />} />
           <Route path="/accesorios" element={<Accesorios />} />
           <Route path="/licencias-software" element={<LicenciasSoftware />} />
+          <Route path="/compras" element={<UserBought />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

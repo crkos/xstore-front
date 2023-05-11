@@ -61,6 +61,10 @@ export default function CartProvider({ children }) {
     });
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   const updateCartItems = (newCartItems) => {
     const existItem = cartItems.find(
       (item) => item.clave_producto === newCartItems.clave_producto
@@ -99,7 +103,13 @@ export default function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, updateCartItems, updateCantidad, deleteItem }}
+      value={{
+        cartItems,
+        updateCartItems,
+        updateCantidad,
+        deleteItem,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>

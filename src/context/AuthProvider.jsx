@@ -54,6 +54,7 @@ export default function AuthProvider({ children }) {
     const { error, user } = await getIsAuth(token);
     if (error) {
       updateNotification("error", error);
+      localStorage.removeItem("auth-token");
       return setAuthInfo({ ...authInfo, isPending: false, error });
     }
 
