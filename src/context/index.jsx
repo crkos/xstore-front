@@ -3,6 +3,7 @@ import NotificationProvider from "./NotificationProvider.jsx";
 import AuthProvider from "./AuthProvider.jsx";
 import ProductProvider from "./ProductProvider.jsx";
 import CartProvider from "./CartProvider.jsx";
+import SearchProvider from "./SearchProvider.jsx";
 
 // eslint-disable-next-line react/prop-types
 export default function ContextProviders({ children }) {
@@ -10,7 +11,9 @@ export default function ContextProviders({ children }) {
     <NotificationProvider>
       <CartProvider>
         <ProductProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <SearchProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </SearchProvider>
         </ProductProvider>
       </CartProvider>
     </NotificationProvider>

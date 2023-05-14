@@ -2,12 +2,18 @@ import SearchBar from "../form/SearchBar.jsx";
 import { BsFillBellFill } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/index.js";
 
+//TODO Agregar searchBar
 function NavBar() {
   const { authInfo } = useAuth();
   const { isLoggedIn } = authInfo;
+
+  const navigate = useNavigate();
+  const handleSearchSubmit = (searchTerm) => {
+    navigate(`/search?producto=${searchTerm.trim()}`);
+  };
 
   if (isLoggedIn) {
     return (
@@ -27,6 +33,7 @@ function NavBar() {
               <SearchBar
                 placeholder="Buscar en toda la tienda..."
                 inputClassName="text-lg border bg-white rounded-none drop-shadow-lg w-full"
+                onSubmit={handleSearchSubmit}
               />
             </li>
             <li className="border-r-2 pr-6 border-r-gray-400">

@@ -15,6 +15,7 @@ import Celulares from "./components/products/Celulares.jsx";
 import Accesorios from "./components/products/Accesorios.jsx";
 import LicenciasSoftware from "./components/products/LicenciasSoftware.jsx";
 import UserBought from "./components/user/UserBought.jsx";
+import SearchStore from "./components/products/SearchStore.jsx";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/accesorios" element={<Accesorios />} />
           <Route path="/licencias-software" element={<LicenciasSoftware />} />
           <Route path="/compras" element={<UserBought />} />
+          <Route path="/search" element={<SearchStore />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
