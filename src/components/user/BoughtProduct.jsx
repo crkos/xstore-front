@@ -13,8 +13,6 @@ const BoughtProduct = ({ producto, cantidadCompras, fechaVenta }) => {
     unidades = "Unidades";
   }
 
-  //TODO Agregar search bar
-
   return (
     <div className="border-4 rounded-xl h-full">
       <div className="w-full ">
