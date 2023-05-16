@@ -54,6 +54,10 @@ const SingleProduct = () => {
     updateCartItems(product);
   };
 
+  const afterEdit = async (producto) => {
+    setSingleProduct(producto);
+  };
+
   useEffect(() => {
     const getProduct = async () => {
       await getSingleProduct();
@@ -112,8 +116,14 @@ const SingleProduct = () => {
         visible={showEditRemoveModal}
         onClose={handleOnCloseRemove}
         idProducto={productId}
+        cantidadInicial={singleProduct.existencia}
       />
-      <EditProductModal visible={showEditModal} onClose={handleOnCloseEdit} />
+      <EditProductModal
+        visible={showEditModal}
+        onClose={handleOnCloseEdit}
+        producto={singleProduct}
+        afterEdit={afterEdit}
+      />
     </section>
   );
 };

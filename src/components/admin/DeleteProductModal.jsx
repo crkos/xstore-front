@@ -6,10 +6,15 @@ import { useState } from "react";
 import { deleteProducto, editCantidadProducto } from "../../api/products.js";
 import { useNotification } from "../../hooks/index.js";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-// eslint-disable-next-line react/prop-types
-const DeleteProductModal = ({ visible, onClose, idProducto }) => {
-  const [cantidadEliminar, setCantidadEliminar] = useState(0);
+const DeleteProductModal = ({
+  visible,
+  onClose,
+  idProducto,
+  cantidadInicial,
+}) => {
+  const [cantidadEliminar, setCantidadEliminar] = useState(cantidadInicial);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingEdit, setLoadingEdit] = useState(false);
 
@@ -98,6 +103,13 @@ const DeleteProductModal = ({ visible, onClose, idProducto }) => {
       </ModalContainer>
     </>
   );
+};
+
+DeleteProductModal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  idProducto: PropTypes.string.isRequired,
+  cantidadInicial: PropTypes.number.isRequired,
 };
 
 export default DeleteProductModal;
