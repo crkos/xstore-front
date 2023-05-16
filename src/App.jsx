@@ -16,6 +16,8 @@ import Accesorios from "./components/products/Accesorios.jsx";
 import LicenciasSoftware from "./components/products/LicenciasSoftware.jsx";
 import UserBought from "./components/user/UserBought.jsx";
 import SearchStore from "./components/products/SearchStore.jsx";
+import Consultas from "./components/admin/Consultas.jsx";
+import Inventario from "./components/admin/Inventario.jsx";
 
 export default function App() {
   return (
@@ -37,6 +39,8 @@ export default function App() {
           <Route path="/licencias-software" element={<LicenciasSoftware />} />
           <Route path="/compras" element={<UserBought />} />
           <Route path="/search" element={<SearchStore />} />
+          <Route path="/consultas" element={<Consultas />} />
+          <Route path="/inventario" element={<Inventario />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

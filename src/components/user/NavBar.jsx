@@ -5,7 +5,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/index.js";
 
-//TODO Agregar searchBar
 function NavBar() {
   const { authInfo } = useAuth();
   const { isLoggedIn } = authInfo;
@@ -42,7 +41,7 @@ function NavBar() {
               </Link>
             </li>
             <li className="border-r-2 pr-6 border-r-gray-400">
-              <Link to="/">
+              <Link to="/consultas">
                 <span className="text-lg">Consultas</span>
               </Link>
             </li>
