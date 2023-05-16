@@ -1,5 +1,6 @@
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+import { BsFillPencilFill } from "react-icons/bs";
 
 const defaultInputStyle =
   "bg-transparent rounded border-2 border-light-subtle w-full text-lg outline-none focus:border-black p-1 peer transition invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500";
@@ -13,6 +14,7 @@ export default function FormInput({
   label,
   // eslint-disable-next-line react/prop-types
   typeform = null,
+  modal,
 
   ...rest
 }) {
@@ -23,19 +25,15 @@ export default function FormInput({
           <input
             id={name}
             name={name}
-            className={defaultInputStyle}
+            className={
+              modal
+                ? "bg-modalBorderColor bg-opacity-50 rounded border-2 border-light-subtle w-full text-lg outline-none focus:border-black p-1 peer transition invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                : defaultInputStyle
+            }
             placeholder={placeholder}
             {...rest}
           />
-          {typeform === "email" ? (
-            <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
-              <MdEmail />
-            </span>
-          ) : (
-            <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
-              <FaLock />
-            </span>
-          )}
+          <TypeForm typeForm={typeform} />
         </div>
         <label
           htmlFor={name}
@@ -47,3 +45,32 @@ export default function FormInput({
     </div>
   );
 }
+
+// eslint-disable-next-line react/prop-types
+const TypeForm = ({ typeForm }) => {
+  if (typeForm === "email") {
+    return (
+      <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
+        <MdEmail />
+      </span>
+    );
+  } else if (typeForm === "password") {
+    return (
+      <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
+        <FaLock />
+      </span>
+    );
+  } else if (typeForm === "field") {
+    return (
+      <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
+        <BsFillPencilFill />
+      </span>
+    );
+  } else {
+    return (
+      <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
+        <MdEmail />
+      </span>
+    );
+  }
+};

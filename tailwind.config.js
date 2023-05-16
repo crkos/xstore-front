@@ -11,6 +11,7 @@ export default {
         bordeColor: "#BFBFBF",
         compraBoton: "#00008D",
         compraFondo: "#D9D9D9",
+        modalBorderColor: "#BFBFBF",
       },
     },
     fontFamily: {},

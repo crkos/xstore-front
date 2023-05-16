@@ -15,7 +15,51 @@ function NavBar() {
     navigate(`/search?producto=${searchTerm.trim()}`);
   };
 
-  if (isLoggedIn) {
+  if (isLoggedIn && authInfo.profile.role === "Administrador") {
+    return (
+      <>
+        <nav className="bg-navbarColor font-light min-w-max p-1">
+          <ul className="flex gap-6 p-1 items-center">
+            <li className="ml-4 mr-4">
+              <Link to="/">
+                <img
+                  alt="Logo marca"
+                  src="/system.png"
+                  className="lg:pt-0 lg:h-20 md:h-12 sm:h-10 aspect-auto"
+                />
+              </Link>
+            </li>
+            <li className="w-max flex-1">
+              <SearchBar
+                placeholder="Buscar en toda la tienda..."
+                inputClassName="text-lg border bg-white rounded-none drop-shadow-lg w-full"
+                onSubmit={handleSearchSubmit}
+              />
+            </li>
+            <li className="border-r-2 pr-6 border-r-gray-400">
+              <Link to="/">
+                <span className="text-lg">Inicio</span>
+              </Link>
+            </li>
+            <li className="border-r-2 pr-6 border-r-gray-400">
+              <Link to="/">
+                <span className="text-lg">Consultas</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/login">
+                <span className="text-2xl">
+                  <FaUserCircle />
+                </span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </>
+    );
+  }
+
+  if (isLoggedIn && authInfo.profile.role !== "Administrador") {
     return (
       <>
         <nav className="bg-navbarColor font-light min-w-max p-1">
