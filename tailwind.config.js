@@ -10,6 +10,7 @@ export default {
         focusedItemColor: "#efd7ca",
         bordeColor: "#BFBFBF",
         compraBoton: "#00008D",
+        eliminarBoton: "#B10303",
         compraFondo: "#D9D9D9",
         modalBorderColor: "#BFBFBF",
       },

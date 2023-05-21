@@ -18,6 +18,8 @@ import UserBought from "./components/user/UserBought.jsx";
 import SearchStore from "./components/products/SearchStore.jsx";
 import Consultas from "./components/admin/Consultas.jsx";
 import Inventario from "./components/admin/Inventario.jsx";
+import Plantilla from "./components/admin/Plantilla.jsx";
+import ReportesVentas from "./components/admin/ReportesVentas.jsx";
 
 export default function App() {
   return (
@@ -41,6 +43,8 @@ export default function App() {
           <Route path="/search" element={<SearchStore />} />
           <Route path="/consultas" element={<Consultas />} />
           <Route path="/inventario" element={<Inventario />} />
+          <Route path="/plantilla" element={<Plantilla />} />
+          <Route path="/reportes" element={<ReportesVentas />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

@@ -1,8 +1,11 @@
 import { useProducts } from "../../hooks/index.js";
 import { useEffect } from "react";
-import { AiFillPrinter } from "react-icons/ai";
+import { AiFillEdit, AiFillPrinter } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import FloatingButton from "./FloatingButton.jsx";
+import { MdDeleteForever } from "react-icons/md";
 
 //TODO: Poder agregar mas productos
 const Inventario = () => {
@@ -48,6 +51,7 @@ const Inventario = () => {
           </tbody>
         </table>
       </div>
+      <FloatingButton />
     </section>
   );
 };
@@ -55,15 +59,10 @@ const Inventario = () => {
 // eslint-disable-next-line react/prop-types
 const TableRow = ({ product }) => {
   const {
-    // eslint-disable-next-line react/prop-types
     clave_producto,
-    // eslint-disable-next-line react/prop-types
     clave_proveedor,
-    // eslint-disable-next-line react/prop-types
     clave_departamento,
-    // eslint-disable-next-line react/prop-types
     nombre_producto,
-    // eslint-disable-next-line react/prop-types
     existencia,
   } = product;
 
@@ -76,6 +75,16 @@ const TableRow = ({ product }) => {
       <td>{existencia}</td>
     </tr>
   );
+};
+
+TableRow.propTypes = {
+  product: PropTypes.shape({
+    clave_producto: PropTypes.string.isRequired,
+    clave_proveedor: PropTypes.string.isRequired,
+    clave_departamento: PropTypes.string.isRequired,
+    nombre_producto: PropTypes.string.isRequired,
+    existencia: PropTypes.number.isRequired,
+  }),
 };
 
 export default Inventario;

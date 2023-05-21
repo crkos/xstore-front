@@ -1,4 +1,5 @@
-// eslint-disable-next-line react/prop-types
+import PropTypes from "prop-types";
+
 const ModalContainer = ({ children, visible, onClose, ignoreContainer }) => {
   const renderChildren = () => {
     if (ignoreContainer) return children;
@@ -26,6 +27,13 @@ const ModalContainer = ({ children, visible, onClose, ignoreContainer }) => {
       {renderChildren()}
     </div>
   );
+};
+
+ModalContainer.propTypes = {
+  children: PropTypes.node,
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func,
+  ignoreContainer: PropTypes.bool,
 };
 
 export default ModalContainer;

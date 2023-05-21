@@ -72,9 +72,7 @@ const TypeForm = ({ typeForm }) => {
     );
   } else {
     return (
-      <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
-        <MdEmail />
-      </span>
+      <span className="absolute top-1/2 right-2 transform -translate-y-1/2"></span>
     );
   }
 };
