@@ -61,7 +61,7 @@ EliminarModal.propTypes = {
   showContainer: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   empleado: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     nombre: PropTypes.string.isRequired,
     apellido_paterno: PropTypes.string.isRequired,
     apellido_materno: PropTypes.string.isRequired,

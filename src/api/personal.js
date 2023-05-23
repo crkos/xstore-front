@@ -29,3 +29,18 @@ export const deletePersonal = async (id) => {
     return { error: error.message || error };
   }
 };
+
+export const createPersonal = async (personal) => {
+  const token = localStorage.getItem("auth-token");
+  try {
+    const { data } = await client.post("/personal", personal, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    return data;
+  } catch (error) {
+    return { error: error.message || error };
+  }
+};

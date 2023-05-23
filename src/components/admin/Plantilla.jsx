@@ -8,11 +8,12 @@ import PropTypes from "prop-types";
 import FloatingButton from "./FloatingButton.jsx";
 import { MdDeleteForever } from "react-icons/md";
 import EliminarModal from "./EliminarModal.jsx";
+import AddPersonal from "./AddPersonal.jsx";
 
 const Plantilla = () => {
   const [personnel, setPersonnel] = useState([]);
   const [showEliminar, setShowEliminar] = useState(false);
-  const [showAñadirEmpleado, setShowAñadirEmpleado] = useState(false);
+  const [showAnadirEmpleado, setShowAnadirEmpleado] = useState(false);
   const [selectedEmpleado, setSelectedEmpleado] = useState({
     nombre: "",
     apellido_paterno: "",
@@ -48,6 +49,18 @@ const Plantilla = () => {
 
   const handleEliminarClose = () => {
     setShowEliminar(false);
+  };
+
+  const handleCloseAddPersonal = () => {
+    setShowAnadirEmpleado(false);
+  };
+
+  const handleOpenAddPersonal = () => {
+    setShowAnadirEmpleado(true);
+  };
+
+  const handleAfterAddEmpleado = async () => {
+    await fetchPersonal();
   };
 
   const fetchPersonal = async () => {
@@ -104,13 +117,18 @@ const Plantilla = () => {
             ))}
           </tbody>
         </table>
-        <FloatingButton />
+        <FloatingButton onClick={handleOpenAddPersonal} />
       </div>
       <EliminarModal
         onClose={handleEliminarClose}
         showContainer={showEliminar}
         empleado={selectedEmpleado}
         afterDelete={handleAfterDelete}
+      />
+      <AddPersonal
+        visible={showAnadirEmpleado}
+        onClose={handleCloseAddPersonal}
+        afterAdd={handleAfterAddEmpleado}
       />
     </section>
   );
