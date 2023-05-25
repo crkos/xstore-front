@@ -135,7 +135,7 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
                   />
                 </div>
                 <label
-                  htmlFor={name}
+                  htmlFor="direccion"
                   className="font-bold text-secondary peer-focus:text-primary transition self-start mb-1"
                 >
                   Dirección

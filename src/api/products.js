@@ -108,3 +108,20 @@ export const editProducto = async (productoId, formData) => {
     return { error: error.message || error };
   }
 };
+
+export const createProducto = async (formData) => {
+  const token = localStorage.getItem("auth-token");
+  try {
+    const { data } = await client.post("/producto", formData, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) return response.data;
+    return { error: error.message || error };
+  }
+};

@@ -20,6 +20,7 @@ import Consultas from "./components/admin/Consultas.jsx";
 import Inventario from "./components/admin/Inventario.jsx";
 import Plantilla from "./components/admin/Plantilla.jsx";
 import ReportesVentas from "./components/admin/ReportesVentas.jsx";
+import SobreNosotros from "./components/user/SobreNosotros.jsx";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Categories />
         <Routes>
           <Route path="/" element={<Products />} />
+          <Route path="/sobre-nosotros" element={<SobreNosotros />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
           <Route path="/product/:productId" element={<SingleProduct />} />

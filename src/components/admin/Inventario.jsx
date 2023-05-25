@@ -1,15 +1,34 @@
-import { useProducts } from "../../hooks/index.js";
-import { useEffect } from "react";
-import { AiFillEdit, AiFillPrinter } from "react-icons/ai";
+import { useNotification, useProducts } from "../../hooks/index.js";
+import { useEffect, useState } from "react";
+import { AiFillPrinter } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import FloatingButton from "./FloatingButton.jsx";
-import { MdDeleteForever } from "react-icons/md";
+import AddProductoModal from "./AddProductoModal.jsx";
+import { createProducto } from "../../api/products.js";
 
-//TODO: Poder agregar mas productos
 const Inventario = () => {
   const { fetchProductos, products } = useProducts();
+  const [showAddProduct, setShowAddProduct] = useState(false);
+
+  const { updateNotification } = useNotification();
+  const handleOpenAddProduct = () => {
+    setShowAddProduct(true);
+  };
+
+  const handleCloseAddProduct = () => {
+    setShowAddProduct(false);
+  };
+
+  const onSubmit = async (formData) => {
+    const { message, error } = await createProducto(formData);
+    if (error) return updateNotification("error", error);
+    updateNotification("success", message);
+    handleCloseAddProduct();
+    await fetchProductos();
+    setShowAddProduct(false);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,7 +70,13 @@ const Inventario = () => {
           </tbody>
         </table>
       </div>
-      <FloatingButton />
+      <FloatingButton onClick={handleOpenAddProduct} />
+      <AddProductoModal
+        visible={showAddProduct}
+        onClose={handleCloseAddProduct}
+        afterAdd={fetchProductos}
+        onSubmit={onSubmit}
+      />
     </section>
   );
 };

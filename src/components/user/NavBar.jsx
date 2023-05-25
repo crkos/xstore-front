@@ -133,6 +133,7 @@ function NavBar() {
             <SearchBar
               placeholder="Buscar en toda la tienda..."
               inputClassName="text-lg border bg-white rounded-none drop-shadow-lg w-full"
+              onSubmit={handleSearchSubmit}
             />
           </li>
           <li className="border-r-2 pr-6 border-r-gray-400">
@@ -141,7 +142,7 @@ function NavBar() {
             </Link>
           </li>
           <li className="border-r-2 pr-6 border-r-gray-400">
-            <Link to="/">
+            <Link to="/sobre-nosotros">
               <span className="text-lg">Sobre nosotros</span>
             </Link>
           </li>

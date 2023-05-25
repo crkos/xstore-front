@@ -10,22 +10,24 @@ import FloatingButton from "./FloatingButton.jsx";
 
 const ReportesVentas = () => {
   const [ventasT, setVentasT] = useState([]);
+  const [filteredVentas, setFilteredVentas] = useState([]);
+  const [filterDate, setFilterDate] = useState("");
+  const [filterEmail, setFilterEmail] = useState("");
+
   const fetchVentas = async () => {
     const { ventasTotales } = await getAllVentas();
     setVentasT(ventasTotales);
   };
 
   const { authInfo } = useAuth();
-
   const { isLoggedIn } = authInfo;
-
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/");
     }
-  });
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     const fetchAllVentas = async () => {
@@ -34,7 +36,32 @@ const ReportesVentas = () => {
     fetchAllVentas();
   }, []);
 
-  const { ventas } = ventasT;
+  useEffect(() => {
+    const filteredData = ventasT.ventas?.filter((venta) => {
+      const ventaDate = new Date(venta.fecha).toLocaleDateString("es-MX", {
+        timeZone: "UTC",
+      });
+      const filterDateFormatted = new Date(filterDate).toLocaleDateString(
+        "es-MX",
+        { timeZone: "UTC" }
+      );
+
+      const userEmail = venta.Cliente.correo;
+
+      if (filterDate && filterEmail) {
+        return (
+          ventaDate === filterDateFormatted && userEmail.includes(filterEmail)
+        );
+      } else if (filterDate) {
+        return ventaDate === filterDateFormatted;
+      } else if (filterEmail) {
+        return userEmail.includes(filterEmail);
+      }
+      return true;
+    });
+
+    setFilteredVentas(filteredData);
+  }, [ventasT.ventas, filterDate, filterEmail]);
 
   return (
     <section className="h-[100vh]">
@@ -52,57 +79,75 @@ const ReportesVentas = () => {
         </button>
       </div>
       <div className="flex justify-center mt-12">
+        <div className="flex items-center space-x-4">
+          <input
+            type="date"
+            placeholder="Filtrar por fecha"
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+            className="p-2 border rounded"
+          />
+          <input
+            type="text"
+            placeholder="Filtrar por correo del usuario"
+            value={filterEmail}
+            onChange={(e) => setFilterEmail(e.target.value)}
+            className="p-2 border rounded w-fit"
+          />
+        </div>
+      </div>
+      <div className="flex justify-center mt-12">
         <table className="table-auto table border-black border-separate bg-modalBorderColor bg-opacity-50 rounded border-spacing-3">
           <thead className="p-2">
-            <tr className="space-x-24 p-6 text-center">
-              <th>Clave venta</th>
-              <th>Código del producto</th>
-              <th>Nombre del producto</th>
-              <th>Cantidad de producto vendido</th>
-              <th>Fecha de la venta</th>
-              <th>Total</th>
+            <tr className="space-x-24 p-2">
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Producto</th>
+              <th>Precio unitario</th>
+              <th>Precio total</th>
+              <th>Cantidad</th>
             </tr>
           </thead>
-          <tbody className="p-2 bg-transparent">
-            {ventas
-              ? ventas.map((venta) => (
+          <tbody>
+            {filteredVentas
+              ? filteredVentas.map((venta) => (
                   <TableRow key={venta.clave_venta} venta={venta} />
                 ))
               : null}
           </tbody>
         </table>
       </div>
+      <FloatingButton />
     </section>
   );
 };
 
-// eslint-disable-next-line react/prop-types
 const TableRow = ({ venta }) => {
-  const { clave_venta, fecha } = venta;
+  const formattedDate = new Date(venta.fecha).toLocaleDateString("es-MX", {
+    timeZone: "UTC",
+  });
+  const userEmail = venta.Cliente.correo;
 
-  const fechaFormateada = new Date(fecha);
-
+  // eslint-disable-next-line react/prop-types
   const { Productos } = venta;
 
   return (
     <>
-      {Productos
-        ? // eslint-disable-next-line react/prop-types
-          Productos.map((producto) => (
-            <tr className="text-center" key={producto.clave_producto}>
-              <td>{clave_venta}</td>
-              <td>{producto.clave_producto}</td>
-              <td>{producto.nombre_producto}</td>
-              <td>{producto.ventaProducto?.cantidad_comprada}</td>
-              <td>{fechaFormateada.toLocaleDateString("es-MX")}</td>
-              <td>
-                {priceFormatter.format(
-                  producto.ventaProducto?.cantidad_comprada * producto.precio
-                )}
-              </td>
-            </tr>
-          ))
-        : null}
+      {/* eslint-disable-next-line react/prop-types */}
+      {Productos.map((producto) => (
+        <tr key={producto.clave_producto} className="text-center">
+          <td className="p-2">{formattedDate}</td>
+          <td className="p-2">{userEmail}</td>
+          <td className="p-2">{producto.nombre_producto}</td>
+          <td className="p-2">{priceFormatter.format(producto.precio)}</td>
+          <td className="p-2">
+            {priceFormatter.format(
+              producto.ventaProducto?.cantidad_comprada * producto.precio
+            )}
+          </td>
+          <td className="p-2">{producto.ventaProducto?.cantidad_comprada}</td>
+        </tr>
+      ))}
     </>
   );
 };
@@ -111,17 +156,13 @@ TableRow.propTypes = {
   venta: PropTypes.shape({
     clave_venta: PropTypes.string.isRequired,
     fecha: PropTypes.string.isRequired,
-    Productos: PropTypes.arrayOf(
-      PropTypes.shape({
-        clave_producto: PropTypes.string.isRequired,
-        nombre_producto: PropTypes.string.isRequired,
-        precio: PropTypes.number.isRequired,
-        ventaProducto: PropTypes.shape({
-          cantidad_comprada: PropTypes.number.isRequired,
-        }),
-      })
-    ),
-  }),
+    Cliente: PropTypes.shape({
+      correo: PropTypes.string.isRequired,
+    }),
+    Producto: PropTypes.shape({
+      nombre: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default ReportesVentas;
