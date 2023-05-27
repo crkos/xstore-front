@@ -23,6 +23,9 @@ const Consultas = () => {
         <Link to="/reportes">
           <BotonConsulta>Reportes de ventas</BotonConsulta>
         </Link>
+        <Link to="/clientes">
+          <BotonConsulta>Clientes</BotonConsulta>
+        </Link>
       </div>
     </section>
   );

@@ -21,6 +21,7 @@ import Inventario from "./components/admin/Inventario.jsx";
 import Plantilla from "./components/admin/Plantilla.jsx";
 import ReportesVentas from "./components/admin/ReportesVentas.jsx";
 import SobreNosotros from "./components/user/SobreNosotros.jsx";
+import Clientes from "./components/admin/Clientes.jsx";
 
 export default function App() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="/inventario" element={<Inventario />} />
           <Route path="/plantilla" element={<Plantilla />} />
           <Route path="/reportes" element={<ReportesVentas />} />
+          <Route path="/clientes" element={<Clientes />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

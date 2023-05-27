@@ -15,6 +15,7 @@ const Payment = () => {
   const [productos, setProductos] = useState([]);
   const [total, setTotal] = useState(0);
   const [madePayment, setMadePayment] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("MXN");
 
   const { cartItems, clearCart } = useCart();
 
@@ -30,13 +31,32 @@ const Payment = () => {
     return acc + item.cantidad * item.precio;
   }, 0);
 
+  // Assuming you have the exchange rates for MXN to USD and vice versa
+  const exchangeRateMXNtoUSD = 0.05; // 1 MXN = 0.05 USD
+  const exchangeRateUSDtoMXN = 20; // 1 USD = 20 MXN
+
+  // Function to convert from MXN to USD
+  const convertToUSD = (amountMXN) => {
+    return amountMXN * exchangeRateMXNtoUSD;
+  };
+
+  // Function to convert from USD to MXN
+  const convertToMXN = (amountUSD) => {
+    return amountUSD * exchangeRateUSDtoMXN;
+  };
+
+  const handleCurrencyChange = (event) => {
+    setSelectedCurrency(event.target.value);
+  };
+
   useEffect(() => {
     setTotal(totalItems);
     setProductos(cartItems);
-  }, [totalItems]);
+  }, [totalItems, cartItems]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    setTotal(totalItems);
   };
 
   const handlePayment = async (cartItems) => {
@@ -206,8 +226,40 @@ const Payment = () => {
             </div>
           </div>
           <div className="mt-8 flex justify-between w-[85%] pl-4 pr-4">
-            <p className="text-2xl font-thin">Pagas</p>
-            <p className="text-2xl font-thin">{priceFormatter.format(total)}</p>
+            <p className="text-2xl font-thin">
+              Pagas:{" "}
+              {selectedCurrency === "MXN"
+                ? priceFormatter.format(total)
+                : priceFormatter.format(convertToUSD(total))}
+              {selectedCurrency}
+            </p>
+          </div>
+          <div>
+            <div>
+              <p className="text-2xl font-bold">Selecciona la moneda:</p>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="currency"
+                    value="MXN"
+                    checked={selectedCurrency === "MXN"}
+                    onChange={handleCurrencyChange}
+                  />
+                  MXN
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="currency"
+                    value="USD"
+                    checked={selectedCurrency === "USD"}
+                    onChange={handleCurrencyChange}
+                  />
+                  USD
+                </label>
+              </div>
+            </div>
           </div>
           <div className="flex items-center justify-center mt-16">
             <Link to="/checkout">

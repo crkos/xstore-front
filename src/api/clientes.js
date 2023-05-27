@@ -48,3 +48,20 @@ export const getIsAuth = async (token) => {
     return { error: error.message || error };
   }
 };
+
+export const getClientes = async () => {
+  try {
+    const { data } = await client.get("/cliente", {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("auth-token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) return response.data;
+
+    return { error: error.message || error };
+  }
+};
