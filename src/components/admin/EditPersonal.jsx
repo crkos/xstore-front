@@ -3,11 +3,16 @@ import PropTypes from "prop-types";
 import { FaUserCircle } from "react-icons/fa";
 import FormInput from "../form/FormInput.jsx";
 import { IoAddCircle } from "react-icons/io5";
-import { useState } from "react";
-import { createPersonal } from "../../api/personal.js";
+import { useEffect, useState } from "react";
+import {
+  createPersonal,
+  editPersonal,
+  getSinglePersonal,
+} from "../../api/personal.js";
 import { useNotification } from "../../hooks/index.js";
 import Selector from "./Selector.jsx";
 import SucursalSelector from "./SucursalSelector.jsx";
+import { AiFillEdit } from "react-icons/ai";
 
 const defaultPersonal = {
   nombre: "",
@@ -23,10 +28,19 @@ const defaultPersonal = {
   sucursal: "",
   contrasena: "",
 };
-const AddPersonal = ({ visible, onClose, afterAdd }) => {
+const EditPersonal = ({ visible, onClose, afterAdd, selectedPersonal }) => {
   const [personal, setPersonal] = useState({
     ...defaultPersonal,
   });
+
+  useEffect(() => {
+    const fetchPersonal = async () => {
+      const { personal } = await getSinglePersonal(selectedPersonal);
+      setPersonal(personal);
+    };
+
+    fetchPersonal();
+  }, [selectedPersonal]);
 
   const handleChange = ({ target }) => {
     setPersonal((prev) => ({
@@ -41,7 +55,7 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
     setPersonal({ ...personal, sucursal: profile.clave_sucursal });
   };
   const handleSubmit = async () => {
-    const { message, error } = await createPersonal(personal);
+    const { message, error } = await editPersonal(personal, selectedPersonal);
     if (error) return updateNotification("error", error);
     updateNotification("success", message);
     setPersonal({ ...defaultPersonal });
@@ -63,7 +77,7 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
     <ModalContainer visible={visible} onClose={onClose} ignoreContainer={true}>
       <div className="bg-submitColor rounded w-fit h-fit overflow-auto p-2">
         <div className="border-4 border-modalBorderColor rounded-lg pb-8 pl-8 pr-8 space-y-2 w-fit">
-          <h1 className="text-xl font-bold">Nuevo Empleado</h1>
+          <h1 className="text-xl font-bold">Editar empleado</h1>
           <div className="flex space-x-4 w-full items-center justify-evenly">
             <FaUserCircle className="text-5xl" />
             <FormInput
@@ -196,8 +210,8 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
               className="bg-submitColor hover:bg-submitColor hover:bg-opacity-50 text-black border-2 rounded-xl border-black font-bold py-2 px-4 pl-6 pr-6 flex items-center justify-center"
               onClick={handleSubmit}
             >
-              <IoAddCircle className="text-2xl" />
-              Añadir Empleado
+              <AiFillEdit className="text-2xl" />
+              Editar empleado
             </button>
           </div>
         </div>
@@ -206,10 +220,11 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
   );
 };
 
-AddPersonal.propTypes = {
+EditPersonal.propTypes = {
   visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func,
   afterAdd: PropTypes.func,
+  selectedPersonal: PropTypes.string,
 };
 
-export default AddPersonal;
+export default EditPersonal;

@@ -42,7 +42,7 @@ const Clientes = () => {
       <div className="flex justify-center mt-12">
         <table
           className="table-auto table border-black border-separate bg-modalBorderColor bg-opacity-50 rounded border-spacing-3"
-          id="table"
+          id="tabla"
         >
           <thead className="p-2">
             <tr className="space-x-24 p-6 text-center">

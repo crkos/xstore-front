@@ -57,3 +57,33 @@ export const loginPersonal = async (personal) => {
     return { error: error.message || error };
   }
 };
+
+export const editPersonal = async (personal, personalId) => {
+  const token = localStorage.getItem("auth-token");
+  try {
+    const { data } = await client.patch("/personal/" + personalId, personal, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    return data;
+  } catch (error) {
+    return { error: error.message || error };
+  }
+};
+
+export const getSinglePersonal = async (personalId) => {
+  const token = localStorage.getItem("auth-token");
+  try {
+    const { data } = await client.get("/personal/" + personalId, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    return data;
+  } catch (error) {
+    return { error: error.message || error };
+  }
+};

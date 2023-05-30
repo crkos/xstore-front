@@ -10,24 +10,25 @@ import { MdDeleteForever } from "react-icons/md";
 import EliminarModal from "./EliminarModal.jsx";
 import AddPersonal from "./AddPersonal.jsx";
 import handlePrint from "./helper/handlePrint.js";
+import EditPersonal from "./EditPersonal.jsx";
 
 const Plantilla = () => {
   const [personnel, setPersonnel] = useState([]);
   const [showEliminar, setShowEliminar] = useState(false);
   const [showAnadirEmpleado, setShowAnadirEmpleado] = useState(false);
+  const [showEditarEmpleado, setShowEditarEmpleado] = useState(false);
   const [selectedEmpleado, setSelectedEmpleado] = useState({
     nombre: "",
     apellido_paterno: "",
     apellido_materno: "",
   });
+  const [personalId, setPersonalId] = useState("");
 
   const { authInfo } = useAuth();
 
   const { isLoggedIn } = authInfo;
 
   const navigate = useNavigate();
-
-  const isAdmin = authInfo?.profile?.role === "Administrador";
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -37,6 +38,10 @@ const Plantilla = () => {
 
   const handleSelectedEmpleado = (empleado) => {
     setSelectedEmpleado(empleado);
+  };
+
+  const handleSelectedPersonalId = (id) => {
+    setPersonalId(id);
   };
 
   const handleAfterDelete = () => {
@@ -56,6 +61,14 @@ const Plantilla = () => {
 
   const handleCloseAddPersonal = () => {
     setShowAnadirEmpleado(false);
+  };
+
+  const handleOpenEditPersonal = () => {
+    setShowEditarEmpleado(true);
+  };
+
+  const handleCloseEditPersonal = () => {
+    setShowEditarEmpleado(false);
   };
 
   const handleOpenAddPersonal = () => {
@@ -124,6 +137,8 @@ const Plantilla = () => {
                     personal={personal}
                     handleEliminar={handleEliminar}
                     handleSelectedEmpleado={handleSelectedEmpleado}
+                    handleSelectedPersonalId={handleSelectedPersonalId}
+                    handleEdit={handleOpenEditPersonal}
                   />
                 ))
               : null}
@@ -142,11 +157,25 @@ const Plantilla = () => {
         onClose={handleCloseAddPersonal}
         afterAdd={handleAfterAddEmpleado}
       />
+      {personalId && (
+        <EditPersonal
+          visible={showEditarEmpleado}
+          onClose={handleCloseEditPersonal}
+          afterAdd={handleAfterAddEmpleado}
+          selectedPersonal={personalId}
+        />
+      )}
     </section>
   );
 };
 
-const TableRow = ({ personal, handleEliminar, handleSelectedEmpleado }) => {
+const TableRow = ({
+  personal,
+  handleEliminar,
+  handleEdit,
+  handleSelectedEmpleado,
+  handleSelectedPersonalId,
+}) => {
   const {
     id,
     nombre,
@@ -170,6 +199,11 @@ const TableRow = ({ personal, handleEliminar, handleSelectedEmpleado }) => {
     handleEliminar();
   };
 
+  const handleEditSelected = () => {
+    handleSelectedPersonalId(id);
+    handleEdit();
+  };
+
   return (
     <tr className="space-x-24 p-6 text-center">
       <td>{id}</td>
@@ -186,7 +220,7 @@ const TableRow = ({ personal, handleEliminar, handleSelectedEmpleado }) => {
       <td>{fechaFormateada.toLocaleDateString("es-MX")}</td>
       <td>{direccion}</td>
       <td>
-        <button>{<AiFillEdit />}</button>
+        <button onClick={handleEditSelected}>{<AiFillEdit />}</button>
       </td>
       <td>
         <button onClick={handleEliminarSelected}>{<MdDeleteForever />}</button>
@@ -217,6 +251,8 @@ TableRow.propTypes = {
   }),
   handleEliminar: PropTypes.func.isRequired,
   handleSelectedEmpleado: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
+  handleSelectedPersonalId: PropTypes.func.isRequired,
 };
 
 export default Plantilla;
