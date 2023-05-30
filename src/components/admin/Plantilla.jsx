@@ -9,6 +9,7 @@ import FloatingButton from "./FloatingButton.jsx";
 import { MdDeleteForever } from "react-icons/md";
 import EliminarModal from "./EliminarModal.jsx";
 import AddPersonal from "./AddPersonal.jsx";
+import handlePrint from "./helper/handlePrint.js";
 
 const Plantilla = () => {
   const [personnel, setPersonnel] = useState([]);
@@ -25,6 +26,8 @@ const Plantilla = () => {
   const { isLoggedIn } = authInfo;
 
   const navigate = useNavigate();
+
+  const isAdmin = authInfo?.profile?.role === "Administrador";
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -76,7 +79,11 @@ const Plantilla = () => {
     <section className="h-[100vh]">
       <div className="flex items-center justify-evenly mt-8">
         <h1 className="text-2xl font-bold">Plantilla de empleado</h1>
-        <AiFillPrinter className="text-3xl" />
+        <button
+          onClick={() => handlePrint("Plantilla.pdf", "tabla", "paisaje")}
+        >
+          <AiFillPrinter className="text-3xl" />
+        </button>
         <button className="flex items-center justify-center">
           <IoArrowBackOutline />
           <Link
@@ -88,7 +95,10 @@ const Plantilla = () => {
         </button>
       </div>
       <div className="flex justify-center mt-12">
-        <table className="table-auto table border-black border-separate bg-modalBorderColor bg-opacity-50 rounded border-spacing-3">
+        <table
+          className="table-auto table border-black border-separate bg-modalBorderColor bg-opacity-50 rounded border-spacing-3"
+          id="tabla"
+        >
           <thead className="p-2">
             <tr className="space-x-24 p-6 text-center">
               <th className="border-separate">Id</th>
@@ -107,14 +117,16 @@ const Plantilla = () => {
             </tr>
           </thead>
           <tbody className="p-2 bg-transparent">
-            {personnel.map((personal) => (
-              <TableRow
-                key={personal.id}
-                personal={personal}
-                handleEliminar={handleEliminar}
-                handleSelectedEmpleado={handleSelectedEmpleado}
-              />
-            ))}
+            {personnel.length
+              ? personnel.map((personal) => (
+                  <TableRow
+                    key={personal.id}
+                    personal={personal}
+                    handleEliminar={handleEliminar}
+                    handleSelectedEmpleado={handleSelectedEmpleado}
+                  />
+                ))
+              : null}
           </tbody>
         </table>
         <FloatingButton onClick={handleOpenAddPersonal} />

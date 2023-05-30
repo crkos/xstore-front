@@ -6,7 +6,8 @@ import { getAllVentas } from "../../api/venta.js";
 import { useAuth } from "../../hooks/index.js";
 import { priceFormatter } from "../../utils/formatter.js";
 import PropTypes from "prop-types";
-import FloatingButton from "./FloatingButton.jsx";
+import { downloadTicket } from "../../utils/downloadTicket.js";
+import handlePrint from "./helper/handlePrint.js";
 
 const ReportesVentas = () => {
   const [ventasT, setVentasT] = useState([]);
@@ -67,7 +68,9 @@ const ReportesVentas = () => {
     <section className="h-[100vh]">
       <div className="flex items-center justify-evenly mt-8">
         <h1 className="text-2xl font-bold">Reportes de ventas</h1>
-        <AiFillPrinter className="text-3xl" />
+        <button onClick={() => handlePrint("Reporte.pdf", "tabla")}>
+          <AiFillPrinter className="text-3xl" />
+        </button>
         <button className="flex items-center justify-center">
           <IoArrowBackOutline />
           <Link
@@ -97,7 +100,10 @@ const ReportesVentas = () => {
         </div>
       </div>
       <div className="flex justify-center mt-12">
-        <table className="table-auto table border-black border-separate bg-modalBorderColor bg-opacity-50 rounded border-spacing-3">
+        <table
+          className="table-auto table border-black border-separate bg-modalBorderColor bg-opacity-50 rounded border-spacing-3"
+          id="tabla"
+        >
           <thead className="p-2">
             <tr className="space-x-24 p-2">
               <th>Fecha</th>
@@ -117,7 +123,6 @@ const ReportesVentas = () => {
           </tbody>
         </table>
       </div>
-      <FloatingButton />
     </section>
   );
 };
@@ -146,6 +151,11 @@ const TableRow = ({ venta }) => {
             )}
           </td>
           <td className="p-2">{producto.ventaProducto?.cantidad_comprada}</td>
+          <td className="p-2">
+            <button onClick={() => downloadTicket(producto, venta.fecha)}>
+              <AiFillPrinter />
+            </button>
+          </td>
         </tr>
       ))}
     </>

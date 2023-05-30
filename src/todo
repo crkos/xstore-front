@@ -1,11 +1,14 @@
--TODO Agregar consultas por código DONE
--TODO Añadir productos DONE
--TODO Ventas por cliente por periodos de tiempo DONE
--TODO Agregar a los clientes como cajeros en personal. DONE
--TODO Poder imprimir en cliente DONE
--TODO Agregar poder comprar en dólares DONE
--TODO Imprimir ticket
--TODO Cancelaciones
--TODO Devoluciones
--TODO Poder ver ticket en gerente
--TODO Modificaciones de empleados.
+-TODO Agregar consultas por código DONE.
+-TODO Añadir productos DONE.
+-TODO Ventas por cliente por periodos de tiempo DONE.
+-TODO Agregar a los clientes como cajeros en personal DONE.
+-TODO Poder imprimir en cliente DONE.
+-TODO Agregar poder comprar en dólares DONE.
+-TODO Imprimir ticket DONE.
+-TODO Hacer que se impriman todo lo que esta disponible en las consultas DONE.
+-TODO Poder ver ticket en gerente, DONE.
+-TODO Rol de gerente, el gerente solo puede ver su sucursal. DONE.
+-TODO Rol de administrador, el administrador puede ver todas las sucursales pero solo ver, no modificar ni agregar. DONE.
+-TODO Cancelaciones. DONE.
+-TODO Devoluciones. DONE.
+-TODO Modificaciones de empleados. NOMAS FALTA ESTO. MAÑANA SE HACE EN LA MAÑANAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAA!

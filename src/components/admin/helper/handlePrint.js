@@ -2,12 +2,15 @@ import jsPDF from "jspdf";
 
 /***
  * Función que permite imprimir una tabla en un documento PDF
- * @param nombreDoc Nombre del documento
- * @param idTabla Id de la tabla a imprimir
+ * @param nombreDoc {string} Nombre del documento
+ * @param idTabla {string} Id de la tabla a imprimir
+ * @param orientacion  {string} Orientación del documento
  * @returns {VoidFunction} No retorna nada
  */
-const handlePrint = (nombreDoc, idTabla) => {
-  const doc = new jsPDF();
+const handlePrint = (nombreDoc, idTabla, orientacion = "portrait") => {
+  const doc = new jsPDF({
+    orientation: orientacion === "paisaje" ? "landscape" : "portrait",
+  });
 
   const tableElement = document.getElementById(idTabla);
 

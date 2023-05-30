@@ -4,17 +4,32 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/index.js";
+import { useState } from "react";
 
 function NavBar() {
-  const { authInfo } = useAuth();
+  const { authInfo, handleLogOut } = useAuth();
   const { isLoggedIn } = authInfo;
+  const [showMenu, setShowMenu] = useState(false); // Agrega estado para controlar la visibilidad del menú
+
+  const handleUserClick = () => {
+    setShowMenu(!showMenu); // Cambia el estado para mostrar u ocultar el menú al hacer clic en el icono de usuario
+  };
+
+  const handleLogoutUser = () => {
+    handleLogOut(); // Llama al método 'logout' para desloguearse
+    setShowMenu(false); // Oculta el menú después de desloguearse
+  };
 
   const navigate = useNavigate();
   const handleSearchSubmit = (searchTerm) => {
     navigate(`/search?producto=${searchTerm.trim()}`);
   };
 
-  if (isLoggedIn && authInfo.profile.role === "Administrador") {
+  if (
+    isLoggedIn &&
+    (authInfo.profile?.role === "Administrador" ||
+      authInfo.profile?.role === "Gerente")
+  ) {
     return (
       <>
         <nav className="bg-navbarColor font-light min-w-max p-1">
@@ -46,11 +61,21 @@ function NavBar() {
               </Link>
             </li>
             <li>
-              <Link to="/login">
-                <span className="text-2xl">
+              <div className="relative">
+                <span className="text-2xl" onClick={handleUserClick}>
                   <FaUserCircle />
                 </span>
-              </Link>
+                {showMenu && ( // Renderiza el menú solo cuando showMenu es true
+                  <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-xl">
+                    <button
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                      onClick={handleLogoutUser}
+                    >
+                      Desloguearse
+                    </button>
+                  </div>
+                )}
+              </div>
             </li>
           </ul>
         </nav>
@@ -104,11 +129,21 @@ function NavBar() {
               </Link>
             </li>
             <li>
-              <Link to="/login">
-                <span className="text-2xl">
+              <div className="relative">
+                <span className="text-2xl" onClick={handleUserClick}>
                   <FaUserCircle />
                 </span>
-              </Link>
+                {showMenu && ( // Renderiza el menú solo cuando showMenu es true
+                  <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-xl">
+                    <button
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                      onClick={handleLogoutUser}
+                    >
+                      Desloguearse
+                    </button>
+                  </div>
+                )}
+              </div>
             </li>
           </ul>
         </nav>

@@ -1,4 +1,13 @@
-const BoughtProduct = ({ producto, cantidadCompras, fechaVenta }) => {
+import { cancelarVenta, devolverVenta } from "../../api/venta.js";
+
+const BoughtProduct = ({
+  producto,
+  cantidadCompras,
+  fechaVenta,
+  estado,
+  clave_venta,
+  afterReturn,
+}) => {
   const fechaFormateada = new Date(fechaVenta);
   const fechaVentaFormateada = fechaFormateada.toLocaleDateString("es-MX", {
     weekday: "long",
@@ -12,6 +21,26 @@ const BoughtProduct = ({ producto, cantidadCompras, fechaVenta }) => {
   if (cantidadCompras > 1) {
     unidades = "Unidades";
   }
+
+  let estadoVenta;
+
+  if (estado === "Entregado") {
+    estadoVenta = "Devolver";
+  } else if (estado === "Envío") {
+    estadoVenta = "Cancelar";
+  } else {
+    estadoVenta = null;
+  }
+
+  const handleDevolverVenta = async () => {
+    await devolverVenta(clave_venta);
+    await afterReturn();
+  };
+
+  const handleCancelVenta = async () => {
+    await cancelarVenta(clave_venta);
+    await afterReturn();
+  };
 
   return (
     <div className="border-4 rounded-xl h-full">
@@ -27,7 +56,7 @@ const BoughtProduct = ({ producto, cantidadCompras, fechaVenta }) => {
           </div>
           <div className="w-full">
             <div className="space-y-2">
-              <p className="text-green-600 font-bold mb-8">Entregado</p>
+              <p className="text-green-600 font-bold mb-8">{estado}</p>
               <div className="flex space-x-14">
                 <div>
                   {/* eslint-disable-next-line react/prop-types */}
@@ -40,6 +69,24 @@ const BoughtProduct = ({ producto, cantidadCompras, fechaVenta }) => {
                 </div>
               </div>
             </div>
+          </div>
+          <div>
+            {estadoVenta !== null && // Nueva condición añadida
+              (estadoVenta === "Entregado" ? (
+                <button
+                  className="pt-2 pb-2 pl-5 pr-5 border-2 mr-5 bg-red-400"
+                  onClick={() => handleDevolverVenta()}
+                >
+                  {estadoVenta}
+                </button>
+              ) : (
+                <button
+                  className="pt-2 pb-2 pl-5 pr-5 border-2 mr-5 bg-red-400"
+                  onClick={() => handleCancelVenta()}
+                >
+                  {estadoVenta}
+                </button>
+              ))}
           </div>
         </div>
       </div>

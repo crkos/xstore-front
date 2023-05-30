@@ -21,6 +21,7 @@ const defaultPersonal = {
   turno: "",
   funcion: "",
   sucursal: "",
+  contrasena: "",
 };
 const AddPersonal = ({ visible, onClose, afterAdd }) => {
   const [personal, setPersonal] = useState({
@@ -41,6 +42,8 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
   };
   const handleSubmit = async () => {
     const { message, error } = await createPersonal(personal);
+    console.log(error);
+    console.log(message);
     if (error) return updateNotification("error", error);
     updateNotification("success", message);
     setPersonal({ ...defaultPersonal });
@@ -50,6 +53,7 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
 
   const funcionOptions = [
     { value: "b27c8153-3859-4ecf-88bc-a95d86bc3a89", title: "Administrador" },
+    { value: "e10a43e1-1e09-4e57-9ff3-c310f7be7822", title: "Gerente" },
   ];
 
   const turnoOptions = [
@@ -170,6 +174,17 @@ const AddPersonal = ({ visible, onClose, afterAdd }) => {
               value={personal.turno}
               label="Turno"
               options={turnoOptions}
+            />
+          </div>
+          <div className="flex space-x-4 w-full items-center justify-evenly">
+            <FormInput
+              name="contrasena"
+              modal={true}
+              label="Contraseña"
+              type="password"
+              placeholder="Contraseña..."
+              onChange={handleChange}
+              value={personal.contrasena}
             />
           </div>
           <div className="w-full flex justify-evenly items-end">

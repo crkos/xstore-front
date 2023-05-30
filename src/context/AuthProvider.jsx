@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { getIsAuth, loginCliente } from "../api/clientes";
 import { useNotification } from "../hooks";
 import { useNavigate } from "react-router-dom";
+import { loginPersonal } from "../api/personal.js";
 
 export const AuthContext = createContext();
 
@@ -19,9 +20,14 @@ export default function AuthProvider({ children }) {
 
   const navigate = useNavigate();
 
-  const handleLogin = async (correo, contrasena) => {
+  const handleLogin = async (correo, contrasena, tipoUsuario = "Usuario") => {
     setAuthInfo({ ...authInfo, isPending: true });
-    const { error, user, message } = await loginCliente({ correo, contrasena });
+    let error, user, message;
+    if (tipoUsuario === "Usuario") {
+      ({ error, user, message } = await loginCliente({ correo, contrasena }));
+    } else if (tipoUsuario === "Staff") {
+      ({ error, user, message } = await loginPersonal({ correo, contrasena }));
+    }
     if (error) {
       updateNotification("error", error);
       return setAuthInfo({ ...authInfo, isPending: false, error });

@@ -78,3 +78,39 @@ export const getAllVentas = async () => {
     return { error: error.message || error };
   }
 };
+
+export const devolverVenta = async (ventaId) => {
+  const token = localStorage.getItem("auth-token");
+  try {
+    const { data } = await client.get("/venta/devolver/" + ventaId, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) return response.data;
+
+    return { error: error.message || error };
+  }
+};
+
+export const cancelarVenta = async (ventaId) => {
+  const token = localStorage.getItem("auth-token");
+  try {
+    const { data } = await client.get("/venta/cancelar/" + ventaId, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    return data;
+  } catch (error) {
+    const { response } = error;
+    if (response?.data) return response.data;
+
+    return { error: error.message || error };
+  }
+};

@@ -44,3 +44,16 @@ export const createPersonal = async (personal) => {
     return { error: error.message || error };
   }
 };
+
+export const loginPersonal = async (personal) => {
+  try {
+    const { data } = await client.post("/personal/login", personal, {
+      headers: {
+        accept: "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    return { error: error.message || error };
+  }
+};

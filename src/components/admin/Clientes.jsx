@@ -4,7 +4,6 @@ import { AiFillPrinter } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import jsPDF from "jspdf";
 import "jspdf-autotable";
 import handlePrint from "./helper/handlePrint.js";
 
@@ -55,12 +54,7 @@ const Clientes = () => {
           <tbody className="p-2 bg-transparent">
             {clientes
               ? clientes.map((cliente) => (
-                  <TableRow
-                    key={cliente.clave_cliente}
-                    cliente={cliente}
-                    //handleEliminar={handleEliminar}
-                    //handleSelectedEmpleado={handleSelectedEmpleado}
-                  />
+                  <TableRow key={cliente.clave_cliente} cliente={cliente} />
                 ))
               : null}
           </tbody>
@@ -77,7 +71,7 @@ const TableRow = ({ cliente }) => {
     <tr className="space-x-24 p-6 text-center">
       <td>{clave_cliente}</td>
       <td>{correo}</td>
-      <td>{funcion.funcion}</td>
+      <td>{funcion.funcion}/Cajero</td>
     </tr>
   );
 };

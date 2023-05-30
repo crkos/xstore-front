@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/index.js";
+import { useEffect } from "react";
 
 const Consultas = () => {
   const { authInfo } = useAuth();
@@ -7,9 +8,15 @@ const Consultas = () => {
 
   const navigate = useNavigate();
 
-  if (!isLoggedIn && authInfo.profile.role !== "Administrador") {
-    navigate("/", { replace: true });
-  }
+  useEffect(() => {
+    if (
+      !isLoggedIn ||
+      (authInfo.profile?.role !== "Administrador" &&
+        authInfo.profile?.role !== "Gerente")
+    ) {
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   return (
     <section className="flex flex-col h-[100vh]">

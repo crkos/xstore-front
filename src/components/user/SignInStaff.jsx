@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth, useNotification } from "../../hooks/index.js";
 import Container from "../form/Container.jsx";
 
-const SignIn = () => {
+const SignInStaff = () => {
   const [userInfo, setUserInfo] = useState({
     correo: "",
     contrasena: "",
@@ -33,7 +33,7 @@ const SignIn = () => {
     e.preventDefault();
     const { error } = validateSignIn();
     if (error) return updateNotification("error", error);
-    handleLogin(userInfo.correo, userInfo.contrasena);
+    handleLogin(userInfo.correo, userInfo.contrasena, "Staff");
   };
 
   const handleOnChange = (e) => {
@@ -82,17 +82,8 @@ const SignIn = () => {
           Crear cuenta
         </Link>
       </p>
-      <p className="mt-14">
-        ¿Staff?{" "}
-        <Link
-          to="/staff"
-          className="underline hover:no-underline text-blue-700"
-        >
-          Ir a Staff
-        </Link>
-      </p>
     </Container>
   );
 };
 
-export default SignIn;
+export default SignInStaff;

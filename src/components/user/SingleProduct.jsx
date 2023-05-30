@@ -29,7 +29,7 @@ const SingleProduct = () => {
 
   const admin = profile?.role;
 
-  const isAdmin = admin === "Administrador";
+  const isGerente = admin === "Gerente";
 
   const getSingleProduct = async () => {
     const { producto, error } = await getSingleProducto(productId);
@@ -105,7 +105,7 @@ const SingleProduct = () => {
             </div>
           </div>
         </div>
-        {isAdmin ? (
+        {isGerente ? (
           <BotonesEdicion
             handleEdit={() => setShowEditModal(true)}
             handleDelete={() => setShowEditRemoveModal(true)}
