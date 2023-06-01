@@ -33,6 +33,12 @@ const Consultas = () => {
         <Link to="/clientes">
           <BotonConsulta>Clientes</BotonConsulta>
         </Link>
+        <Link to="/proveedores">
+          <BotonConsulta>Proveedores</BotonConsulta>
+        </Link>
+        <Link to="/sucursales">
+          <BotonConsulta>Sucursales</BotonConsulta>
+        </Link>
       </div>
     </section>
   );

@@ -1,3 +1,4 @@
+// Obtiene los datos de los proveedores y los muestra en el componente de autocompletado de liveSearch
 export const renderItemProveedor = (result) => {
   return (
     <div
@@ -5,7 +6,7 @@ export const renderItemProveedor = (result) => {
       className="flex space-x-2 rounded overflow-hidden"
     >
       <img
-        src={result.avatar}
+        src="/proveedores.png"
         alt={result.nombre_proveedor}
         className="w-16 h-16 object-cover"
       />

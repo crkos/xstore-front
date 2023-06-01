@@ -1,3 +1,4 @@
+//Función que renderiza los resultados de la búsqueda de la sucursal en liveSearch
 export const renderItemSucursal = (result) => {
   return (
     <div
@@ -5,7 +6,7 @@ export const renderItemSucursal = (result) => {
       className="flex space-x-2 rounded overflow-hidden"
     >
       <img
-        src={result.avatar}
+        src="/sucursal.png"
         alt={result.nombre}
         className="w-16 h-16 object-cover"
       />

@@ -23,6 +23,8 @@ import ReportesVentas from "./components/admin/ReportesVentas.jsx";
 import SobreNosotros from "./components/user/SobreNosotros.jsx";
 import Clientes from "./components/admin/Clientes.jsx";
 import SignInStaff from "./components/user/SignInStaff.jsx";
+import Proveedor from "./components/admin/Proveedor.jsx";
+import Sucursales from "./components/admin/Sucursales.jsx";
 
 export default function App() {
   return (
@@ -50,6 +52,8 @@ export default function App() {
           <Route path="/plantilla" element={<Plantilla />} />
           <Route path="/reportes" element={<ReportesVentas />} />
           <Route path="/clientes" element={<Clientes />} />
+          <Route path="/proveedores" element={<Proveedor />} />
+          <Route path="/sucursales" element={<Sucursales />} />
           <Route path="/staff" element={<SignInStaff />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
